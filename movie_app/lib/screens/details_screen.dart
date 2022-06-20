@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/widgets/widgets.dart';
 
 
 class DetailsScreen extends StatelessWidget {
@@ -14,7 +15,11 @@ final String movie = ModalRoute.of(context)?.settings.arguments.toString() ?? 'n
           _CustomAppbar(),
           SliverList(
             delegate: SliverChildListDelegate([
-              _PosterAndTitle()
+              _PosterAndTitle(),
+              _overView(),
+              _overView(),
+              _overView(),
+              CastinCards()
             ]),
           )
         ],
@@ -37,15 +42,16 @@ class _CustomAppbar extends StatelessWidget {
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        titlePadding: EdgeInsets.all(0),
+        titlePadding: const EdgeInsets.all(0),
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
+          padding: EdgeInsets.only(bottom: 10),
           color: Colors.black12,
           child: Text('Movie.Title',style: TextStyle(fontSize: 16),),
 
         ),
-      background: FadeInImage(
+      background: const FadeInImage(
         placeholder:AssetImage('assets/loading.gif') ,
         image: NetworkImage('https://via.placeholder.com/500x300'),
         fit: BoxFit.cover,
@@ -95,5 +101,20 @@ class _PosterAndTitle extends StatelessWidget {
         )
       ]),
     );
+  }
+}
+
+class _overView extends StatelessWidget {
+  const _overView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+      child: Text('Commodo ad minim deserunt amet duis ipsum dolor. Laboris mollit duis culpa nisi ex enim aliqua dolore cupidatat enim voluptate. Aute incididunt adipisicing Lorem dolor consectetur tempor in elit velit sint do. Tempor officia consequat consectetur pariatur pariatur incididunt nisi anim. Anim in velit labore aliqua non fugiat do tempor quis laborum nostrud nostrud.',
+      textAlign: TextAlign.justify,
+      style: Theme.of(context).textTheme.subtitle1,
+    )
+  );
   }
 }
