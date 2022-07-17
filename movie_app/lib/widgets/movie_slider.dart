@@ -4,13 +4,14 @@ import '../models/models.dart';
 
 class MovieSlider extends StatelessWidget {
   
-  final List<Movie> movies;
+  final List<Movie> movie;
   final String? title;
   
 
-  const MovieSlider({super.key, required this.movies,  this.title});
+  const MovieSlider({super.key, required this.movie,  this.title});
   @override
   Widget build(BuildContext context) {
+    var widget;
     return Container(
       width: double.infinity,
       height: 260,
@@ -28,8 +29,8 @@ class MovieSlider extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: movies.length,
-              itemBuilder: (_,int index)=> _MoviePoster( movies[index])
+              itemCount: movie.length,
+              itemBuilder: (_,int index)=> _MoviePoster( movie[index], '${title}-${index}-${movie[index].id}')
               ),
           )
         ],
@@ -39,35 +40,43 @@ class MovieSlider extends StatelessWidget {
 }
 class _MoviePoster extends StatelessWidget {
   
-  final Movie movies;
+  final Movie movie;
+  final String  heroId;
 
-  const _MoviePoster( this.movies);
+  const _MoviePoster( this.movie, this.heroId);
 
 
 
   @override
   Widget build(BuildContext context) {
+
+
+    movie.heroId= heroId;
+
     return Container(
                   width: 130,
                   height: 190,
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   child:Column(children: [
                     GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, 'details',arguments: 'movie-instance'),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: FadeInImage(
-                          placeholder: AssetImage('assets/no-image.jpg'),
-                           image: NetworkImage( movies.fullPosterImg),
-                           width: 130,
-                           height: 190,
-                           fit: BoxFit.cover,
-                           ),
+                      onTap: () => Navigator.pushNamed(context, 'details', arguments: movie),
+                      child: Hero(
+                        tag:movie.heroId!,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: FadeInImage(
+                            placeholder: AssetImage('assets/no-image.jpg'),
+                             image: NetworkImage( movie.fullPosterImg),
+                             width: 130,
+                             height: 190,
+                             fit: BoxFit.cover,
+                             ),
+                        ),
                       ),
                     ),
 
                        SizedBox(height: 5,),
-                        Text( movies.title,
+                        Text( movie.title,
                        maxLines: 2,
                        overflow: TextOverflow.ellipsis,
                        textAlign: TextAlign.center,

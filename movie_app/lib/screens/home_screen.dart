@@ -3,6 +3,8 @@ import 'package:movie_app/providers/movies_provider.dart';
 import 'package:movie_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../search/search_delegate.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-final moviesProvider = Provider.of<MoviesProvier>(context, listen:true);
+final moviesProvider = Provider.of<MoviesProvider>(context, listen:true);
 
 
     return Scaffold(
@@ -19,7 +21,7 @@ final moviesProvider = Provider.of<MoviesProvier>(context, listen:true);
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: (){},
+            onPressed: ()=>showSearch(context: context, delegate: MovieSearchDelegate()),
            icon: Icon(Icons.search_outlined))
         ],
       ),
@@ -31,7 +33,7 @@ final moviesProvider = Provider.of<MoviesProvier>(context, listen:true);
 
           //Slider de Peliculas
           MovieSlider(
-            movies: moviesProvider.popularMovies,
+            movie: moviesProvider.popularMovies,
             title: 'Populares',
           ),
         ],
